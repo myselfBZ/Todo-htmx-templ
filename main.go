@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 	"text/template"
 )
 
@@ -29,6 +30,9 @@ func main() {
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
     mux.HandleFunc("/", HandleIndex)
+
+    mux.HandleFunc("POST /todos", HandleAdd)
+    mux.HandleFunc("DELETE /todos", HandleDelte)
     server.ListenAndServe()
 }
 
@@ -62,6 +66,18 @@ func HandleAdd(w http.ResponseWriter, r *http.Request) {
 
 
 func HandleDelte(w http.ResponseWriter, r *http.Request) {
+    id := r.PathValue("id")
+    validatedId, err := strconv.Atoi(id)
+    if err != nil {
+        w.WriteHeader(http.StatusBadRequest)
+        return 
+    }
+    if validatedId >= len(Tasks) {
+        w.WriteHeader(http.StatusBadRequest)
+        return 
+    }
+    Tasks = append(Tasks[:validatedId], Tasks[validatedId+1:]...)
+    w.WriteHeader(http.StatusOK)
     
 }
 
