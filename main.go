@@ -8,14 +8,13 @@ import (
 type Todo struct {
     Text string
     ID int 
-    User string 
 }
 
 var Tasks = []Todo{
-    {Text: "Do some maths", ID: 1, User: "Natasha"},
-    {Text: "Do a little bit of coding", ID: 2, User: "MEEE"},
-    {Text: "Sleep for 10 hours on days off", ID: 3, User: "MEEE"},
-    {Text: "something else, do whatever the heck comes to your mind", ID: 4, User: "MEEE"},
+    {Text: "Do some maths", ID: 1,},
+    {Text: "Do a little bit of coding", ID:2},
+    {Text: "Sleep for 10 hours on days off", ID: 3,},
+    {Text: "something else, do whatever the heck comes to your mind", ID: 4,},
 
 }
 
@@ -47,9 +46,24 @@ func HandleIndex(w http.ResponseWriter, r *http.Request){
 
 
 
+func HandleAdd(w http.ResponseWriter, r *http.Request) {
+   if r.Method == http.MethodPost {
+        r.ParseForm()
+        todo := r.FormValue("todo")
+        task := Todo{
+            Text: todo,
+            ID: len(Tasks), 
+        }
+        Tasks = append(Tasks, task)
+   } 
+}
 
 
 
+
+func HandleDelte(w http.ResponseWriter, r *http.Request) {
+    
+}
 
 
 
