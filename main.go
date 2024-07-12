@@ -40,7 +40,7 @@ func main() {
 
 
 func HandleIndex(w http.ResponseWriter, r *http.Request){
-    templ := template.Must(template.ParseFiles("templates/index.templ"))
+    templ := template.Must(template.ParseFiles("templates/index.html"))
     templ.Execute(w, map[string]interface{}{
         "Todos": Tasks,
     })

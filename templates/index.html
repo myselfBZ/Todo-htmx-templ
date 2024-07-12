@@ -9,7 +9,6 @@
 <body>
     <h1>Todo List</h1>
     {{ range .Todos }}
-        User: <p>{{ .User }}</p>
     <ul id="todo-list">
             <li>{{ .Text }}</li>
         {{ end }}
