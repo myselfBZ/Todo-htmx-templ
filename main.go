@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 	"text/template"
@@ -31,8 +32,8 @@ func main() {
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
     mux.HandleFunc("/", HandleIndex)
 
-    mux.HandleFunc("POST /todos", HandleAdd)
-    mux.HandleFunc("DELETE /todos", HandleDelte)
+    mux.HandleFunc("/todos", HandleAdd)
+    mux.HandleFunc("/delete-todos/{id}", HandleDelte)
     server.ListenAndServe()
 }
 
@@ -52,13 +53,17 @@ func HandleIndex(w http.ResponseWriter, r *http.Request){
 
 func HandleAdd(w http.ResponseWriter, r *http.Request) {
    if r.Method == http.MethodPost {
+        log.Println("Method Post")
         r.ParseForm()
         todo := r.FormValue("todo")
+        log.Println(todo)
         task := Todo{
             Text: todo,
             ID: len(Tasks), 
         }
+
         Tasks = append(Tasks, task)
+        log.Println("Added the todo")
    } 
 }
 
