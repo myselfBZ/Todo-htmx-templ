@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 	"text/template"
@@ -53,17 +52,14 @@ func HandleIndex(w http.ResponseWriter, r *http.Request){
 
 func HandleAdd(w http.ResponseWriter, r *http.Request) {
    if r.Method == http.MethodPost {
-        log.Println("Method Post")
-        r.ParseForm()
         todo := r.FormValue("todo")
-        log.Println(todo)
         task := Todo{
             Text: todo,
             ID: len(Tasks), 
         }
 
         Tasks = append(Tasks, task)
-        log.Println("Added the todo")
+        w.Header().Set("HX-Redirect", "/")     
    } 
 }
 
@@ -83,6 +79,7 @@ func HandleDelte(w http.ResponseWriter, r *http.Request) {
     }
     Tasks = append(Tasks[:validatedId], Tasks[validatedId+1:]...)
     w.WriteHeader(http.StatusOK)
+    w.Header().Set("HX-Redirect", "/")
     
 }
 
