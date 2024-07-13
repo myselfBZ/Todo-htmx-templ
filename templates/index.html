@@ -10,7 +10,7 @@
     <h1>Todo List</h1>
     {{ range .Todos }}
     <ul id="todo-list">
-            <li>{{ .Text }}</li>
+            <li>{{ .Text }}</li> <button type="submit" hx-delete="/delete-todos/{{.ID}}">Delete me</button>
         {{ end }}
     </ul>
         
