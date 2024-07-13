@@ -78,7 +78,6 @@ func HandleDelte(w http.ResponseWriter, r *http.Request) {
         return 
     }
     Tasks = append(Tasks[:validatedId], Tasks[validatedId+1:]...)
-    w.WriteHeader(http.StatusOK)
     w.Header().Set("HX-Redirect", "/")
     
 }
