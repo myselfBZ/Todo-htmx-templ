@@ -1,3 +1,4 @@
+{{ block "index" . }} 
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -5,8 +6,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title></title>
         <link href="css/style.css" rel="stylesheet">
+          <script src="https://unpkg.com/htmx.org@2.0.2" integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ" crossorigin="anonymous"></script>  
     </head>
     <body>
+        <form hx-post="/add-todo">
+            <input type="text" name="content" value="" required> 
+            <button type="submit">Let's go</button>
+        </form>
+        <div>
+            {{ template "tasks" . }}
+        </div>
     
     </body>
 </html>
+{{ end }} 
+
+
+{{ block "tasks" . }} 
+    {{range .}} 
+        <p>{{.Content}}</p>
+    {{ end }} 
+{{ end }} 
